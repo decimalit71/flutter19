@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const ContactApp());
+}
+
+class ContactApp extends StatelessWidget {
+  const ContactApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Contact List',
+      theme: ThemeData(
+        useMaterial3: false,
+        primaryColor: const Color(0xFF607D8B),
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: const ContactListPage(),
+    );
+  }
+}
+
+class Contact {
+  final String name;
+  final String phone;
+
+  Contact({required this.name, required this.phone});
+}
+
+class ContactListPage extends StatefulWidget {
+  const ContactListPage({super.key});
+
+  @override
+  State<ContactListPage> createState() => _ContactListPageState();
+}
+
+class _ContactListPageState extends State<ContactListPage> {
+  final TextEditingController nameController = TextEditingController(
+    text: 'Kazi Shamim',
+  );
+
+  final TextEditingController phoneController = TextEditingController(
+    text: '01745-777777',
+  );
+
+  final List<Contact> contacts = [
+    Contact(name: 'Kazi Shamim', phone: '01745-777777'),
+    Contact(name: 'Jawad', phone: '01877-777777'),
+    Contact(name: 'Ferdous', phone: '01673-777777'),
+    Contact(name: 'Hasan', phone: '01745-777777'),
+    Contact(name: 'Hasan', phone: '01745-777777'),
+    Contact(name: 'Hasan', phone: '01745-777777'),
+
+  ];
+
+  final Color primaryColor = const Color(0xFF607D8B);
+  final Color nameColor = const Color(0xFFFF6557);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Contact List',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+        backgroundColor: primaryColor,
+        elevation: 0,
+      ),
+
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Input fields and Add button
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 12),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 14,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  TextField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintText: 'Phone Number',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 14,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 38,
+                    child: ElevatedButton(
+                      onPressed: (){},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      child: const Text('Add', style: TextStyle(fontSize: 14)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Contact list
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                itemCount: contacts.length,
+                itemBuilder: (context, index) {
+                  final contact = contacts[index];
+
+                  return Card(
+                    color: const Color(0xFFF2F3F4),
+                    elevation: 0,
+                    margin: const EdgeInsets.only(bottom: 4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 2,
+                      ),
+                      leading: const Icon(
+                        Icons.person,
+                        color: Color(0xFF70564B),
+                        size: 32,
+                      ),
+
+                      title: Text(
+                        contact.name,
+                        style: TextStyle(
+                          color: nameColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      subtitle: Text(
+                        contact.phone,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+
+                      trailing: const Icon(
+                        Icons.call,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
